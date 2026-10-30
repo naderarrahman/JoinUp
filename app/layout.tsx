@@ -4,15 +4,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 import Navbar from "@/components/layout/Navbar"
 
-const inter = Inter({ 
-  subsets: ["latin"], 
-  variable: "--font-inter" 
-})
-
-const plusJakarta = Plus_Jakarta_Sans({ 
-  subsets: ["latin"], 
-  variable: "--font-plus-jakarta" 
-})
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
+const plusJakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-plus-jakarta" })
 
 export default function RootLayout({
   children,
@@ -23,11 +16,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn(
-        "antialiased font-sans", 
-        inter.variable, 
-        plusJakarta.variable
-      )}
+      className={cn("antialiased font-sans", inter.variable, plusJakarta.variable)}
     >
       <body>
         <ThemeProvider
@@ -36,8 +25,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar/>
-          <main>{children}</main>
+          <Navbar />
+          {children}
         </ThemeProvider>
       </body>
     </html>
