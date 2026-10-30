@@ -1,14 +1,17 @@
-import { Geist, Geist_Mono } from "next/font/google"
-
+import { Inter, Plus_Jakarta_Sans } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
+import Navbar from "@/components/layout/Navbar"
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'})
+const inter = Inter({ 
+  subsets: ["latin"], 
+  variable: "--font-inter" 
+})
 
-const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
+const plusJakarta = Plus_Jakarta_Sans({ 
+  subsets: ["latin"], 
+  variable: "--font-plus-jakarta" 
 })
 
 export default function RootLayout({
@@ -20,10 +23,22 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", geist.variable)}
+      className={cn(
+        "antialiased font-sans", 
+        inter.variable, 
+        plusJakarta.variable
+      )}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar/>
+          <main>{children}</main>
+        </ThemeProvider>
       </body>
     </html>
   )
