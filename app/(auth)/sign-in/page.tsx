@@ -179,7 +179,7 @@ export default function SignInPage() {
               Good to see you again!
             </h2>
             <p className="text-muted-foreground text-lg">
-              Your community has been waiting for your return. Let's continue creating positive change together.
+              Your community has been waiting for your return. Let&apos;s continue creating positive change together.
             </p>
           </div>
 

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { CalendarDays, MapPin, Users, Share2, UserCircle2, ShieldCheck, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import JoinEventButton from "../AvaterFunctionality/JoinEventButton";
 
 interface EventType {
   _id: string;
@@ -112,10 +113,7 @@ export default function DetailsEventCard({ event }: DetailsEventCardProps) {
               <Share2 className="w-5 h-5 text-muted-foreground" />
             </Button>
             
-            {/* Join Event Button (Placeholder for now) */}
-            <Button size="lg" className="w-full sm:w-auto font-bold px-8 h-12 shadow-lg shadow-primary/20 rounded-xl">
-              Join Event
-            </Button>
+            <JoinEventButton event={event}  />
           </div>
         </div>
 

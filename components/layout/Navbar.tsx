@@ -92,7 +92,6 @@ export default function Navbar() {
               <div className="w-10 h-10 rounded-full bg-muted animate-pulse" />
             ) : session ? (
               
-              /* Logged In State: Popover without asChild */
               <Popover>
                 
                 <PopoverTrigger className="relative h-10 w-10 rounded-full overflow-hidden border-2 border-primary/20 hover:border-primary transition-all duration-300 focus:outline-none group cursor-pointer flex items-center justify-center bg-primary/10">
