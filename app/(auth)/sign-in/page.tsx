@@ -45,6 +45,18 @@ export default function SignInPage() {
     }
   };
 
+  // Google Login Handler
+  const handleGoogleLogin = async () => {
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/", 
+      });
+    } catch (error) {
+      toast.error("Google login failed. Please try again.");
+    }
+  };
+
   return (
     <div className="min-h-screen flex bg-gradient-to-br from-pink-50 via-background to-pink-100/50 dark:from-zinc-950 dark:via-background dark:to-zinc-900">
       
@@ -119,7 +131,7 @@ export default function SignInPage() {
             </Button>
           </form>
 
-          {/* Social Login (Google) */}
+          {/* Google Login Button */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t border-border" />
@@ -133,7 +145,7 @@ export default function SignInPage() {
             variant="outline" 
             type="button" 
             className="w-full h-12 rounded-xl"
-            onClick={() => toast.info("Google login will be added soon!")}
+            onClick={handleGoogleLogin}
           >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
@@ -147,20 +159,19 @@ export default function SignInPage() {
           <p className="mt-8 text-center text-sm text-muted-foreground">
             Don't have an account?{" "}
             <Link href="/sign-up" className="text-primary font-bold hover:underline">
-              Create Account
+              Sign Up
             </Link>
           </p>
         </div>
       </div>
 
-      {/* Right Side: Community Trust Design (Matches Hero Section) */}
+      {/* Right Side: Community Trust Design */}
       <div className="hidden lg:flex w-1/2 relative items-center justify-center overflow-hidden bg-gradient-to-tr from-primary/5 to-transparent">
         
-        {/* Background Blobs (Like Hero Section) */}
+        {/* Background Blobs */}
         <div className="absolute top-20 left-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse delay-1000" />
 
-        {/* Floating Glass Cards (Like Hero Section) */}
         <div className="relative z-10 w-full max-w-lg p-10">
           
           <div className="text-center mb-10">
@@ -174,7 +185,6 @@ export default function SignInPage() {
 
           {/* Glass Card Grid */}
           <div className="grid grid-cols-2 gap-4">
-            {/* Card 1 */}
             <div className="bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-white/50 dark:border-zinc-700/50">
               <div className="bg-primary/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-4">
                 <CalendarDays className="w-6 h-6 text-primary" />
@@ -183,7 +193,6 @@ export default function SignInPage() {
               <p className="text-xs text-muted-foreground">12 events this week</p>
             </div>
 
-            {/* Card 2 */}
             <div className="bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-white/50 dark:border-zinc-700/50 mt-8">
               <div className="bg-primary/10 w-12 h-12 rounded-2xl flex items-center justify-center mb-4">
                 <Users className="w-6 h-6 text-primary" />
@@ -192,7 +201,6 @@ export default function SignInPage() {
               <p className="text-xs text-muted-foreground">2,500+ active members</p>
             </div>
 
-            {/* Card 3 (Full Width) */}
             <div className="col-span-2 bg-primary p-6 rounded-3xl shadow-xl shadow-primary/20 flex items-center justify-between">
               <div>
                 <h3 className="font-bold text-white mb-1 flex items-center gap-2">
@@ -206,7 +214,6 @@ export default function SignInPage() {
             </div>
           </div>
 
-          {/* Trust Banner */}
           <div className="mt-8 flex justify-center items-center gap-3 text-sm text-muted-foreground bg-background/50 backdrop-blur-sm py-3 px-6 rounded-full w-fit mx-auto border border-border/50">
             <CheckCircle2 className="w-4 h-4 text-green-500" />
             Trusted by 10,000+ community members
