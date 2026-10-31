@@ -85,11 +85,10 @@ export default async function Gallery() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
           {displaySlots.map((slot, index) => {
             
-            // প্রথম ছবিটি বড়, বাকিগুলো নরমাল
             let gridClass = "col-span-1 row-span-1";
-            if (index === 0) gridClass = "md:col-span-2 md:row-span-2"; // বড় কার্ড
-            if (index === 3) gridClass = "md:col-span-2 md:row-span-1"; // মাঝখানের চওড়া কার্ড
-            if (index === 5) gridClass = "md:col-span-2 md:row-span-1"; // নিচের চওড়া কার্ড
+            if (index === 0) gridClass = "md:col-span-2 md:row-span-2"; 
+            if (index === 3) gridClass = "md:col-span-2 md:row-span-1"; 
+            if (index === 5) gridClass = "md:col-span-2 md:row-span-1"; 
 
             return (
               <Link 
@@ -105,10 +104,8 @@ export default async function Gallery() {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 />
                 
-                {/* ডার্ক গ্রেডিয়েন্ট ওভারলে (যাতে লেখা ফুটে ওঠে) */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
                 
-                {/* লেখা এবং আইকন */}
                 <div className="absolute inset-0 flex flex-col justify-end p-6">
                   <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                     <h3 className={`text-white font-bold font-heading mb-2 line-clamp-2 ${index === 0 ? "text-2xl md:text-3xl" : "text-xl"}`}>
