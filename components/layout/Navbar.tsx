@@ -64,7 +64,7 @@ export default function Navbar() {
         {/* Middle: Links */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center gap-8 z-10">
           <Link 
-            href="/events" 
+            href="/upcoming-events" 
             className="text-sm font-semibold text-muted-foreground transition-colors hover:text-primary"
           >
             Upcoming Events

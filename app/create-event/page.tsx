@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalendarDays, Image as ImageIcon, MapPin, Type, AlignLeft, Sparkles } from "lucide-react";
+import { CalendarDays, Image as ImageIcon, MapPin, Type, AlignLeft, Sparkles, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,12 +13,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { authClient } from "@/lib/auth-client"; 
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 export default function CreateEventPage() {
   const [eventType, setEventType] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: session } = authClient.useSession();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -30,6 +36,8 @@ export default function CreateEventPage() {
       location: formData.get("location") as string,
       thumbnail: formData.get("thumbnail") as string,
       description: formData.get("description") as string,
+      organizerEmail: session?.user?.email || "Unknown User", 
+      createdAt: new Date().toISOString(), 
     };
 
     const selectedDate = new Date(createdData.eventDate);
@@ -37,13 +45,32 @@ export default function CreateEventPage() {
     today.setHours(0, 0, 0, 0); 
 
     if (selectedDate < today) {
-      alert("Error: You cannot select a past date. Please choose a future date.");
+      toast.error("You cannot select a past date. Please choose a future date.");
+      setIsSubmitting(false);
       return;
     }
 
-    console.log("Created Data:", createdData);
-    alert("Event Created Successfully!");
-    
+    try {
+      const res = await fetch("http://localhost:5000/create-event", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(createdData),
+      });
+      
+      if (res.ok) {
+        toast.success("Event Created Successfully!");
+        form.reset();
+        redirect("/upcoming-events");
+      } else {
+        toast.error("Failed to create event.");
+      }
+    } catch (error) {
+      toast.error("Network Error: Could not connect to the server.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const today = new Date().toISOString().split("T")[0];
@@ -52,7 +79,6 @@ export default function CreateEventPage() {
     <div className="min-h-screen bg-muted/30 py-12 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-3xl bg-background rounded-3xl p-6 sm:p-10 shadow-xl border border-border/50">
         
-        {/* Header */}
         <div className="mb-8">
           <span className="inline-flex items-center gap-1.5 py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-4">
             <Sparkles className="w-4 h-4" />
@@ -66,10 +92,8 @@ export default function CreateEventPage() {
           </p>
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           
-          {/* Event Title */}
           <div className="space-y-2">
             <Label htmlFor="title" className="text-sm font-semibold">Event Title <span className="text-primary">*</span></Label>
             <div className="relative">
@@ -85,13 +109,11 @@ export default function CreateEventPage() {
             </div>
           </div>
 
-          {/* Grid: Event Type & Date */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             
-            {/* Event Type */}
             <div className="space-y-2">
               <Label htmlFor="eventType" className="text-sm font-semibold">Event Type <span className="text-primary">*</span></Label>
-              <Select onValueChange={(value) => setEventType(value || "")}  value={eventType} required>
+              <Select onValueChange={(value) => setEventType(value || "")} value={eventType}>
                 <SelectTrigger className="h-12 bg-muted/50">
                   <SelectValue placeholder="Select event type" />
                 </SelectTrigger>
@@ -107,7 +129,6 @@ export default function CreateEventPage() {
               </Select>
             </div>
 
-            {/* Event Date */}
             <div className="space-y-2">
               <Label htmlFor="eventDate" className="text-sm font-semibold">Event Date <span className="text-primary">*</span></Label>
               <div className="relative">
@@ -125,7 +146,6 @@ export default function CreateEventPage() {
             </div>
           </div>
 
-          {/* Location */}
           <div className="space-y-2">
             <Label htmlFor="location" className="text-sm font-semibold">Event Location <span className="text-primary">*</span></Label>
             <div className="relative">
@@ -141,7 +161,6 @@ export default function CreateEventPage() {
             </div>
           </div>
 
-          {/* Thumbnail URL */}
           <div className="space-y-2">
             <Label htmlFor="thumbnail" className="text-sm font-semibold">Thumbnail Image URL <span className="text-primary">*</span></Label>
             <div className="relative">
@@ -157,7 +176,6 @@ export default function CreateEventPage() {
             </div>
           </div>
 
-          {/* Description */}
           <div className="space-y-2">
             <Label htmlFor="description" className="text-sm font-semibold">Event Description <span className="text-primary">*</span></Label>
             <div className="relative">
@@ -172,9 +190,20 @@ export default function CreateEventPage() {
             </div>
           </div>
 
-          {/* Submit */}
-          <Button type="submit" size="lg" className="w-full h-14 text-lg font-bold shadow-lg shadow-primary/20">
-            Create Event
+          <Button 
+            type="submit" 
+            size="lg" 
+            className="w-full h-14 text-lg font-bold shadow-lg shadow-primary/20" 
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                Creating Event...
+              </>
+            ) : (
+              "Create Event"
+            )}
           </Button>
         </form>
 
