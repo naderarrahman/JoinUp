@@ -3,6 +3,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 import Navbar from "@/components/layout/Navbar"
+import { Toaster } from "@/components/ui/sonner"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const plusJakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-plus-jakarta" })
@@ -27,6 +28,8 @@ export default function RootLayout({
         >
           <Navbar />
           {children}
+          <Toaster position="top-center" richColors />
+
         </ThemeProvider>
       </body>
     </html>

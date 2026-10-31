@@ -65,9 +65,9 @@ export default function Navbar() {
           </Button>
 
           {/* Login Button */}
-          <Link href="/login">
+          <Link href="/sign-in">
             <Button className="font-semibold shadow-md px-6 rounded-full">
-              Login
+              Sign In
             </Button>
           </Link>
         </div>
