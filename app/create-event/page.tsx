@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation"; 
 import { CalendarDays, Image as ImageIcon, MapPin, Type, AlignLeft, Sparkles, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,9 +16,9 @@ import {
 } from "@/components/ui/select";
 import { authClient } from "@/lib/auth-client"; 
 import { toast } from "sonner";
-import { redirect } from "next/navigation";
 
 export default function CreateEventPage() {
+  const router = useRouter(); 
   const [eventType, setEventType] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { data: session } = authClient.useSession();
@@ -62,7 +63,7 @@ export default function CreateEventPage() {
       if (res.ok) {
         toast.success("Event Created Successfully!");
         form.reset();
-        redirect("/upcoming-events");
+        router.push("/upcoming-events"); 
       } else {
         toast.error("Failed to create event.");
       }
