@@ -66,7 +66,7 @@ export default function EditEventModal({ event, isOpen, onClose, onEditSuccess, 
     };
 
     try {
-      const res = await fetch(`http://localhost:5000/update-event/${event._id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/update-event/${event._id}`, {
         method: "PATCH",
         headers: { 
           "Content-Type": "application/json",

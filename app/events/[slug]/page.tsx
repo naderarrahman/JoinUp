@@ -11,7 +11,7 @@ export default async function EventDetailsPage({ params }: PageProps) {
   let event = null;
 
   try {
-    const res = await fetch(`http://localhost:5000/get-events/${slug}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/get-events/${slug}`, {
       cache: "no-store",
     });
 

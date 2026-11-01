@@ -22,7 +22,7 @@ export default async function JoinedEventsPage() {
 
   try {
     const res = await fetch(
-      `http://localhost:5000/joined-events/${session.user.email}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/joined-events/${session.user.email}`,
       { 
         headers: {
           "Authorization": `Bearer ${token}`,

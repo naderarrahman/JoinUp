@@ -37,7 +37,7 @@ export default function DeleteEventModal({ event, isOpen, onClose, onDeleteSucce
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/delete-event/${event._id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/delete-event/${event._id}`, {
         method: "DELETE",
         headers: { 
           "Content-Type": "application/json",

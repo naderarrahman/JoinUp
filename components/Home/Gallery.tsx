@@ -24,7 +24,7 @@ export default async function Gallery() {
   let pastEvents: EventType[] = [];
 
   try {
-    const res = await fetch("http://localhost:5000/past-events", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/past-events`, {
       cache: "no-store",
     });
     if (res.ok) {

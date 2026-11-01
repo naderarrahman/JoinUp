@@ -21,7 +21,7 @@ export default async function ManageEventsPage() {
 
   let events: EventType[] = [];
   try {
-    const res = await fetch(`http://localhost:5000/my-events/${session.user.email}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/my-events/${session.user.email}`, {
       headers: {
         "Authorization": `Bearer ${token}`,
       },
