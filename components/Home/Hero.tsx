@@ -39,7 +39,7 @@ export default function Hero() {
             
             {/* Call to Actions */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              <Link href="/events">
+              <Link href="/upcoming-events">
                 <Button size="lg" className="w-full sm:w-auto font-semibold px-8 h-14 text-base shadow-lg shadow-primary/25 group transition-all hover:scale-105">
                   Explore Upcoming Events
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -54,7 +54,6 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right Side: Modern Design with Your Image */}
           <div className="relative h-[400px] lg:h-[480px] w-full flex justify-center items-center mt-10 lg:mt-0">
             
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 dark:opacity-5 -z-10 mix-blend-overlay"></div>

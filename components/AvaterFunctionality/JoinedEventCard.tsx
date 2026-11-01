@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CalendarDays, MapPin, ArrowRight, Users } from "lucide-react";
 
-interface JoinedEventType {
+export interface JoinedEventType {
   _id: string;
   eventId: string;
   userEmail: string;
@@ -30,10 +30,13 @@ export default function JoinedEventCard({ event }: JoinedEventCardProps) {
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
+  const todayString = new Date().toISOString().split("T")[0]; 
+  const eventDateString = new Date(event.eventDate).toISOString().split("T")[0];
+  const isPastEvent = eventDateString < todayString;
+
   return (
     <div className="group bg-background rounded-3xl border border-border/50 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden relative mt-6">
       
-      {/* Image & Ribbon */}
       <div className="relative h-56 w-full">
         <div className="absolute inset-0 rounded-t-3xl overflow-hidden">
           <Image
@@ -49,9 +52,14 @@ export default function JoinedEventCard({ event }: JoinedEventCardProps) {
           <Users className="w-4 h-4" />
           <span className="font-bold text-xs tracking-wider uppercase">{event.eventType}</span>
         </div>
+
+        {isPastEvent && (
+          <div className="absolute top-4 right-4 bg-muted/90 backdrop-blur-md text-muted-foreground px-3 py-1.5 rounded-full text-xs font-bold shadow-sm z-10">
+            Event Ended
+          </div>
+        )}
       </div>
 
-      {/* Content */}
       <div className="p-6 pt-8 flex flex-col flex-1 bg-background">
         
         <div className="flex flex-col gap-2.5 text-sm text-foreground font-medium mb-4">

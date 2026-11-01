@@ -5,7 +5,7 @@ import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { Loader2, UserPlus, LogOut } from "lucide-react";
+import { Loader2, UserPlus, LogOut, CalendarX } from "lucide-react";
 import { EventType } from "../EventCard/EventCard";
 
 interface JoinEventButtonProps {
@@ -21,10 +21,15 @@ export default function JoinEventButton({ event }: JoinEventButtonProps) {
   const [joinedRecordId, setJoinedRecordId] = useState<string | null>(null);
   const [checkingStatus, setCheckingStatus] = useState(true);
 
+  const now = new Date();
+  const todayString = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+  const eventDateString = event.eventDate.split("T")[0];
+  const isPastEvent = eventDateString < todayString;
+
   useEffect(() => {
     let isMounted = true;
 
-    if (!session?.user) {
+    if (isPending || isPastEvent || !session?.user) {
       return;
     }
 
@@ -59,7 +64,7 @@ export default function JoinEventButton({ event }: JoinEventButtonProps) {
     return () => {
       isMounted = false;
     };
-  }, [session, event._id]);
+  }, [session, isPending, event._id, isPastEvent]);
 
   const handleJoin = async () => {
     if (!session?.user) {
@@ -125,6 +130,19 @@ export default function JoinEventButton({ event }: JoinEventButtonProps) {
       setIsJoining(false);
     }
   };
+
+  if (isPastEvent) {
+    return (
+      <Button
+        disabled
+        size="lg"
+        className="w-full sm:w-auto font-bold px-8 h-12 rounded-xl bg-primary/10 text-primary border-2 border-primary/30 shadow-inner opacity-100 cursor-not-allowed"
+      >
+        <CalendarX className="w-5 h-5 mr-2" />
+        Event Ended
+      </Button>
+    );
+  }
 
   if (isPending || (session?.user && checkingStatus)) {
     return (

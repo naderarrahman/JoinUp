@@ -1,73 +1,38 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import { CalendarDays, HeartCrack } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import JoinedEventCard from "@/components/AvaterFunctionality/JoinedEventCard";
+import JoinedEventCard, { JoinedEventType } from "@/components/AvaterFunctionality/JoinedEventCard";
+import { auth } from "@/lib/auth"; 
 
-interface JoinedEventType {
-  _id: string;
-  eventId: string;
-  userEmail: string;
-  title: string;
-  eventType: string;
-  eventDate: string;
-  location: string;
-  thumbnail: string;
-  joinedAt: string;
-}
+export default async function JoinedEventsPage() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-export default function JoinedEventsPage() {
-  const router = useRouter();
-  const { data: session, isPending } = authClient.useSession();
-  const [events, setEvents] = useState<JoinedEventType[]>([]);
-  const [loading, setLoading] = useState(true);
+  if (!session?.user) {
+    redirect("/sign-in");
+  }
 
-  useEffect(() => {
-    if (isPending) return;
+  let events: JoinedEventType[] = [];
 
-    if (!session?.user) {
-      router.push("/sign-in");
-      return;
-    }
-
-    const fetchJoinedEvents = async () => {
-      try {
-        const res = await fetch(
-          `http://localhost:5000/joined-events/${session.user.email}`
-        );
-        if (res.ok) {
-          const data = await res.json();
-          setEvents(data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch joined events", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchJoinedEvents();
-  }, [session, isPending, router]);
-
-  if (isPending || loading) {
-    return (
-      <div className="min-h-screen bg-muted/30 py-12 px-4 flex justify-center items-center">
-        <p className="text-lg font-semibold animate-pulse text-muted-foreground">
-          Loading your joined events...
-        </p>
-      </div>
+  try {
+    const res = await fetch(
+      `http://localhost:5000/joined-events/${session.user.email}`,
+      { cache: "no-store" }
     );
+    if (res.ok) {
+      events = await res.json();
+    }
+  } catch (error) {
+    console.error("Failed to fetch joined events", error);
   }
 
   return (
     <div className="min-h-screen bg-muted/30 py-12 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         
-        {/* Header */}
         <div className="mb-10 text-center lg:text-left">
           <span className="inline-flex items-center gap-1.5 py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-4">
             <CalendarDays className="w-4 h-4" />
@@ -81,7 +46,6 @@ export default function JoinedEventsPage() {
           </p>
         </div>
 
-        {/* Event Grid / Empty State */}
         {events.length === 0 ? (
           <div className="bg-background rounded-3xl p-12 text-center border border-border/50 shadow-sm h-full flex flex-col items-center justify-center min-h-[400px]">
             <div className="bg-muted p-5 rounded-full mb-6">
@@ -100,7 +64,7 @@ export default function JoinedEventsPage() {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {events.map((event) => (
               <JoinedEventCard key={event._id} event={event} />
             ))}

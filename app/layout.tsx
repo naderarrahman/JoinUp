@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 import Navbar from "@/components/layout/Navbar"
 import { Toaster } from "@/components/ui/sonner"
+import Footer from "@/components/layout/Footer"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const plusJakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-plus-jakarta" })
@@ -28,6 +29,7 @@ export default function RootLayout({
         >
           <Navbar />
           {children}
+          <Footer />
           <Toaster position="top-center" richColors />
 
         </ThemeProvider>

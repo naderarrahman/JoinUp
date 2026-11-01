@@ -77,7 +77,7 @@ export default async function Gallery() {
             Moments of Impact
           </h2>
           <p className="text-muted-foreground text-lg">
-            A glimpse into the community service events we've successfully completed together.
+            A glimpse into the community service events we&apos;ve successfully completed together.
           </p>
         </div>
 
