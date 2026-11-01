@@ -142,7 +142,7 @@ export default function JoinEventButton({ event }: JoinEventButtonProps) {
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/leave-event/${joinedRecordId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/leave-event/${joinedRecordId}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`,
