@@ -11,6 +11,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 interface DeleteEventModalProps {
   event: EventType | null;
@@ -27,10 +28,21 @@ export default function DeleteEventModal({ event, isOpen, onClose, onDeleteSucce
     if (!event) return;
 
     setIsDeleting(true);
+    const token = await getTokenFromClient();
+
+    if (!token) {
+      toast.error("Authentication failed. Please login again.");
+      setIsDeleting(false);
+      return;
+    }
+
     try {
       const res = await fetch(`http://localhost:5000/delete-event/${event._id}`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
         body: JSON.stringify({ userEmail }),
       });
 

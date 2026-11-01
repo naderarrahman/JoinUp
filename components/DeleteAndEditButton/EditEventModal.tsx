@@ -21,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 const categories = ["Donation", "Cleanup", "Plantation", "Winter Relief", "Food Drive", "Health Camp", "Education"];
 
@@ -50,6 +51,13 @@ export default function EditEventModal({ event, isOpen, onClose, onEditSuccess, 
     if (!event) return;
     
     setIsUpdating(true);
+    const token = await getTokenFromClient();
+
+    if (!token) {
+      toast.error("Authentication failed. Please login again.");
+      setIsUpdating(false);
+      return;
+    }
 
     const updatedData = {
       ...formData,
@@ -60,7 +68,10 @@ export default function EditEventModal({ event, isOpen, onClose, onEditSuccess, 
     try {
       const res = await fetch(`http://localhost:5000/update-event/${event._id}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
         body: JSON.stringify(updatedData),
       });
 

@@ -5,6 +5,7 @@ import { CalendarDays, HeartCrack } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import JoinedEventCard, { JoinedEventType } from "@/components/AvaterFunctionality/JoinedEventCard";
 import { auth } from "@/lib/auth"; 
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 export default async function JoinedEventsPage() {
   const session = await auth.api.getSession({
@@ -15,12 +16,19 @@ export default async function JoinedEventsPage() {
     redirect("/sign-in");
   }
 
+  const token = await getTokenFromServer();
+
   let events: JoinedEventType[] = [];
 
   try {
     const res = await fetch(
       `http://localhost:5000/joined-events/${session.user.email}`,
-      { cache: "no-store" }
+      { 
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+        cache: "no-store" 
+      }
     );
     if (res.ok) {
       events = await res.json();

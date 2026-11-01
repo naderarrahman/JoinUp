@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Loader2, UserPlus, LogOut, CalendarX } from "lucide-react";
 import { EventType } from "../EventCard/EventCard";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 interface JoinEventButtonProps {
   event: EventType;
@@ -34,10 +35,20 @@ export default function JoinEventButton({ event }: JoinEventButtonProps) {
     }
 
     const checkStatus = async () => {
+      const token = await getTokenFromClient();
+      
+      if (!token) {
+        if (isMounted) setCheckingStatus(false);
+        return;
+      }
+
       try {
         const res = await fetch("http://localhost:5000/check-join-status", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
           body: JSON.stringify({ eventId: event._id, userEmail: session.user.email }),
         });
         
@@ -74,6 +85,14 @@ export default function JoinEventButton({ event }: JoinEventButtonProps) {
     }
 
     setIsJoining(true);
+    const token = await getTokenFromClient();
+
+    if (!token) {
+      toast.error("Authentication failed. Please login again.");
+      setIsJoining(false);
+      return;
+    }
+
     const joinedData = {
       eventId: event._id,
       userEmail: session.user.email,
@@ -88,7 +107,10 @@ export default function JoinEventButton({ event }: JoinEventButtonProps) {
     try {
       const res = await fetch("http://localhost:5000/join-event", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
         body: JSON.stringify(joinedData),
       });
       const data = await res.json();
@@ -111,9 +133,20 @@ export default function JoinEventButton({ event }: JoinEventButtonProps) {
     if (!joinedRecordId) return;
     
     setIsJoining(true);
+    const token = await getTokenFromClient();
+
+    if (!token) {
+      toast.error("Authentication failed. Please login again.");
+      setIsJoining(false);
+      return;
+    }
+
     try {
       const res = await fetch(`http://localhost:5000/leave-event/${joinedRecordId}`, {
         method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
       });
 
       if (res.ok) {

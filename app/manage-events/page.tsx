@@ -3,9 +3,10 @@ import { CalendarX2, PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { auth } from "@/lib/auth"; // BetterAuth সার্ভার কনফিগারেশন
+import { auth } from "@/lib/auth"; 
 import { EventType } from "@/components/EventCard/EventCard";
 import ManageEventClient from "@/components/AvaterFunctionality/ManageEventClient";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 export default async function ManageEventsPage() {
   const session = await auth.api.getSession({
@@ -16,9 +17,14 @@ export default async function ManageEventsPage() {
     redirect("/sign-in");
   }
 
+  const token = await getTokenFromServer();
+
   let events: EventType[] = [];
   try {
     const res = await fetch(`http://localhost:5000/my-events/${session.user.email}`, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
       cache: "no-store",
     });
     if (res.ok) {
@@ -32,7 +38,6 @@ export default async function ManageEventsPage() {
     <div className="min-h-screen bg-muted/30 py-12 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         
-        {/* Header */}
         <div className="mb-10 flex flex-col sm:flex-row items-center justify-between gap-6 bg-background p-8 rounded-3xl border border-border/50 shadow-sm">
           <div>
             <span className="inline-flex items-center gap-1.5 py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-3">

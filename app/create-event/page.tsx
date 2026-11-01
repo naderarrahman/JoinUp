@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select";
 import { authClient } from "@/lib/auth-client"; 
 import { toast } from "sonner";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 export default function CreateEventPage() {
   const router = useRouter(); 
@@ -26,6 +27,8 @@ export default function CreateEventPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+     const token = await getTokenFromClient();
 
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -56,6 +59,7 @@ export default function CreateEventPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(createdData),
       });
