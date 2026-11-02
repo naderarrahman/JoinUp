@@ -106,7 +106,7 @@ export default function RegisterPage() {
                 <Label htmlFor="name" className="text-sm font-semibold">Full Name</Label>
                 <div className="relative group">
                   <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
-                  <Input id="name" name="name" placeholder="Tanvir Ahmed" className="pl-12 h-13 text-base bg-muted/40 border-border/50 focus-visible:ring-primary/20 focus-visible:border-primary/50 rounded-xl transition-all" required />
+                  <Input id="name" name="name" placeholder="Nader Ar Rahman" className="pl-12 h-13 text-base bg-muted/40 border-border/50 focus-visible:ring-primary/20 focus-visible:border-primary/50 rounded-xl transition-all" required />
                 </div>
               </div>
 
@@ -114,7 +114,7 @@ export default function RegisterPage() {
                 <Label htmlFor="email" className="text-sm font-semibold">Email</Label>
                 <div className="relative group">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
-                  <Input id="email" name="email" type="email" placeholder="name@example.com" className="pl-12 h-13 text-base bg-muted/40 border-border/50 focus-visible:ring-primary/20 focus-visible:border-primary/50 rounded-xl transition-all" required />
+                  <Input id="email" name="email" type="email" placeholder="naderarahman@gmail.com" className="pl-12 h-13 text-base bg-muted/40 border-border/50 focus-visible:ring-primary/20 focus-visible:border-primary/50 rounded-xl transition-all" required />
                 </div>
               </div>
 
