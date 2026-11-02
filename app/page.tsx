@@ -1,15 +1,27 @@
+import Hero from "@/components/Home/Hero";
+import RecentEvents from "@/components/Home/RecentEvents";
 import Features from "@/components/Home/Features";
 import Gallery from "@/components/Home/Gallery";
-import Hero from "@/components/Home/Hero";
 import Newsletter from "@/components/Home/Newsletter";
-import RecentEvents from "@/components/Home/RecentEvents";
 
-export default function Page() {
+export default async function Page() {
+  let nextEvent = null;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/next-event`, {
+      cache: "no-store",
+    });
+    if (res.ok) {
+      nextEvent = await res.json();
+    }
+  } catch (error) {
+    console.error("Failed to fetch next event:", error);
+  }
+
   return (
     <main className="w-full overflow-hidden">
-      <Hero />
-      <Features />
+      <Hero nextEvent={nextEvent} />
       <RecentEvents />
+      <Features />
       <Gallery />
       <Newsletter />
     </main>
