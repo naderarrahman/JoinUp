@@ -61,7 +61,7 @@ export default function Navbar() {
     : "U";
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 transition-all duration-300">
+    <nav className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/60 backdrop-blur-xl supports-[backdrop-filter]:bg-background/40 shadow-sm transition-all duration-300">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 relative">
         
         <div className="flex items-center z-20">
@@ -85,7 +85,7 @@ export default function Navbar() {
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center z-10">
           <Link 
             href="/upcoming-events" 
-            className="text-sm font-bold text-muted-foreground transition-all duration-300 hover:text-primary hover:bg-primary/5 px-6 py-2.5 rounded-full border border-transparent hover:border-primary/20"
+            className="text-sm font-bold text-foreground/70 transition-all duration-300 hover:text-primary hover:bg-primary/10 px-6 py-2.5 rounded-full"
           >
             Upcoming Events
           </Link>

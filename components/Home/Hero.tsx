@@ -38,7 +38,7 @@ export default function Hero({ nextEvent }: HeroProps) {
   }, [nextEvent]);
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/10 dark:from-zinc-950 dark:via-background dark:to-zinc-900 pt-16 pb-24 lg:pt-24 lg:pb-32 flex items-center">
+    <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/10 dark:from-zinc-950 dark:via-background dark:to-zinc-900 py-16 lg:py-24 flex items-center">
       
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/15 blur-[120px]" />
@@ -53,10 +53,10 @@ export default function Hero({ nextEvent }: HeroProps) {
             {nextEvent && (
               <Link 
                 href={`/events/${nextEvent._id}`}
-                className="group inline-flex items-center gap-2 py-2 px-4 rounded-full bg-white/80 dark:bg-zinc-800/80 border border-primary/20 backdrop-blur-md text-primary font-medium mb-8 w-fit mx-auto lg:mx-0 shadow-sm hover:bg-white hover:border-primary/40 hover:shadow-md transition-all duration-300 cursor-pointer"
+                className="group inline-flex items-center gap-2 py-2 px-5 rounded-full bg-white/80 dark:bg-zinc-800/80 border border-primary/20 backdrop-blur-md text-primary font-medium mb-8 w-fit mx-auto lg:mx-0 shadow-sm hover:bg-white hover:border-primary/40 hover:shadow-md transition-all duration-300 cursor-pointer"
               >
-                <CalendarDays className="w-5 h-5 animate-pulse group-hover:scale-110 transition-transform" />
-                <span>Next Event: <strong className="text-foreground group-hover:text-primary transition-colors">{nextEvent.title}</strong> in {countdown.days}d {countdown.hours}h</span>
+                <CalendarDays className="w-4 h-4 animate-pulse group-hover:scale-110 transition-transform" />
+                <span className="text-sm">Next Event: <strong className="text-foreground group-hover:text-primary transition-colors">{nextEvent.title}</strong> in {countdown.days}d {countdown.hours}h</span>
               </Link>
             )}
             
@@ -91,11 +91,11 @@ export default function Hero({ nextEvent }: HeroProps) {
             </div>
           </div>
 
-          <div className="relative h-[480px] lg:h-[580px] w-full flex justify-center items-center mt-12 lg:mt-0">
+          <div className="relative h-[400px] lg:h-[480px] w-full flex justify-center items-center mt-12 lg:mt-0">
             
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 dark:opacity-5 -z-10 mix-blend-overlay rounded-full blur-sm" />
 
-            <div className="relative w-[290px] h-[380px] sm:w-[330px] sm:h-[440px] bg-white/40 dark:bg-zinc-800/40 backdrop-blur-2xl border-2 border-white/50 dark:border-zinc-700/50 rounded-[3rem] p-3 shadow-[0_20px_60px_rgba(0,0,0,0.15)] z-10 transition-transform duration-500 hover:-translate-y-2">
+            <div className="relative w-[280px] h-[360px] sm:w-[320px] sm:h-[420px] bg-white/40 dark:bg-zinc-800/40 backdrop-blur-2xl border-2 border-white/50 dark:border-zinc-700/50 rounded-[3rem] p-3 shadow-[0_20px_60px_rgba(0,0,0,0.15)] z-10 transition-transform duration-500 hover:-translate-y-2">
               <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden bg-zinc-100 dark:bg-zinc-900">
                 <Image 
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5z_OUVUHLz0BVwjVjDYut5OajokVcCDSJ-6FwdQ-dZA&s=10" 
@@ -108,9 +108,9 @@ export default function Hero({ nextEvent }: HeroProps) {
               </div>
             </div>
 
-            <Link href="/upcoming-events" className="absolute top-10 left-0 sm:left-4 lg:-left-10 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-border/50 z-20 flex items-center gap-3 animate-bounce [animation-duration:4s] hover:scale-105 transition-transform cursor-pointer">
-              <div className="bg-primary/10 p-3 rounded-xl text-primary">
-                <CalendarDays className="w-6 h-6" />
+            <Link href="/upcoming-events" className="absolute top-8 left-0 sm:left-4 lg:-left-8 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-border/50 z-20 flex items-center gap-3 animate-bounce [animation-duration:4s] hover:scale-105 transition-transform cursor-pointer">
+              <div className="bg-primary/10 p-2.5 rounded-xl text-primary">
+                <CalendarDays className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="font-bold text-sm text-foreground">Upcoming Events</h3>
@@ -120,14 +120,14 @@ export default function Hero({ nextEvent }: HeroProps) {
               </div>
             </Link>
 
-            <Link href="/upcoming-events" className="absolute bottom-16 right-0 sm:right-4 lg:-right-10 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-border/50 z-20 flex items-center gap-4 animate-bounce [animation-duration:5s] [animation-delay:1s] hover:scale-105 transition-transform cursor-pointer">
+            <Link href="/upcoming-events" className="absolute bottom-12 right-0 sm:right-4 lg:-right-8 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-border/50 z-20 flex items-center gap-4 animate-bounce [animation-duration:5s] [animation-delay:1s] hover:scale-105 transition-transform cursor-pointer">
               <div className="flex -space-x-3">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="w-9 h-9 rounded-full border-2 border-background bg-zinc-200 overflow-hidden">
+                  <div key={i} className="w-8 h-8 rounded-full border-2 border-background bg-zinc-200 overflow-hidden">
                     <img src={`https://i.pravatar.cc/100?img=${i + 15}`} alt="volunteer" className="w-full h-full object-cover" />
                   </div>
                 ))}
-                <div className="w-9 h-9 rounded-full border-2 border-background bg-primary flex items-center justify-center text-[10px] text-white font-bold">
+                <div className="w-8 h-8 rounded-full border-2 border-background bg-primary flex items-center justify-center text-[10px] text-white font-bold">
                   +40
                 </div>
               </div>
@@ -138,12 +138,12 @@ export default function Hero({ nextEvent }: HeroProps) {
             </Link>
 
             {nextEvent && (
-              <Link href={`/events/${nextEvent._id}`} className="absolute top-4 right-0 sm:right-4 lg:-right-8 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl p-5 rounded-2xl shadow-2xl border border-border/50 z-20 w-[190px] hover:scale-105 transition-transform cursor-pointer">
-                <div className="flex items-center gap-2 mb-2">
+              <Link href={`/events/${nextEvent._id}`} className="absolute top-2 right-0 sm:right-4 lg:-right-6 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl p-4 rounded-2xl shadow-2xl border border-border/50 z-20 w-[180px] hover:scale-105 transition-transform cursor-pointer">
+                <div className="flex items-center gap-2 mb-1.5">
                   <Clock className="w-4 h-4 text-primary" />
-                  <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Starts In</span>
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Starts In</span>
                 </div>
-                <p className="text-2xl font-extrabold text-foreground">{countdown.days}d : {countdown.hours}h</p>
+                <p className="text-xl font-extrabold text-foreground">{countdown.days}d : {countdown.hours}h</p>
                 <p className="text-xs text-primary font-semibold mt-1 truncate">{nextEvent.title}</p>
               </Link>
             )}
